@@ -1,7 +1,3 @@
-→ page.tsx → lápiz Edit
-
-Borrá todo y pegá este código:
-
 "use client";
 
 import { useState } from "react";
