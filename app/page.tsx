@@ -56,98 +56,41 @@ export default function Home() {
   }
 
   return (
-    <main style={{
-      minHeight: "100vh",
-      background: "#fff",
-      color: "#111",
-      fontFamily: "Arial, Helvetica, sans-serif",
-      display: "flex",
-      flexDirection: "column"
-    }}>
-      <header style={{
-        height: 72,
-        borderBottom: "1px solid #e5e5e5",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 36px"
-      }}>
-        <strong style={{ fontFamily: "Georgia, serif", fontSize: 26 }}>
-          Biblioteca Sarmiento
-        </strong>
-
-        <nav style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 34,
-          fontSize: 16
-        }}>
-          <button onClick={nuevoChat} style={buttonSmall}>
-            Nuevo chat
-          </button>
-
-          <button onClick={() => setSection("chat")} style={navStyle(section === "chat")}>
-            Chat IA
-          </button>
-
-          <a
-            href="https://sites.google.com/view/megliopedia/x-bs"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: "#555",
-              textDecoration: "none",
-              padding: "26px 0"
-            }}
-          >
-            Archivos
-          </a>
-
-          <button onClick={() => setSection("contacto")} style={navStyle(section === "contacto")}>
-            Contacto
-          </button>
-        </nav>
+    <main style={page}>
+      <header style={header}>
+        <strong style={title}>Biblioteca Sarmiento</strong>
       </header>
 
       {section === "contacto" ? (
-        <section style={{
-          maxWidth: 760,
-          margin: "90px auto",
-          padding: "0 24px",
-          fontSize: 18,
-          lineHeight: 1.6
-        }}>
-          <h1 style={{ fontFamily: "Georgia, serif", fontSize: 42 }}>
-            Contacto
-          </h1>
+        <section style={contactSection}>
+          <h1 style={contactTitle}>Contacto</h1>
           <p><strong>Mauricio Meglioli</strong></p>
           <p>Responsable del proyecto Biblioteca Sarmiento.</p>
         </section>
       ) : (
         <>
-          <section style={{
-            flex: 1,
-            maxWidth: 860,
-            width: "100%",
-            margin: "0 auto",
-            padding: "54px 24px 150px"
-          }}>
+          <section style={chatSection}>
             {messages.map((m, i) => (
-              <div key={i} style={{
-                display: "flex",
-                justifyContent: m.role === "user" ? "flex-end" : "flex-start",
-                marginBottom: 24
-              }}>
-                <div style={{
-                  maxWidth: "72%",
-                  padding: "18px 22px",
-                  borderRadius: 18,
-                  background: m.role === "user" ? "#111" : "#f4f4f4",
-                  color: m.role === "user" ? "#fff" : "#111",
-                  fontSize: 17,
-                  lineHeight: 1.55,
-                  whiteSpace: "pre-wrap"
-                }}>
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  justifyContent: m.role === "user" ? "flex-end" : "flex-start",
+                  marginBottom: 24,
+                }}
+              >
+                <div
+                  style={{
+                    maxWidth: "78%",
+                    padding: "16px 20px",
+                    borderRadius: 18,
+                    background: m.role === "user" ? "#111" : "#f4f4f4",
+                    color: m.role === "user" ? "#fff" : "#111",
+                    fontSize: 16,
+                    lineHeight: 1.55,
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
                   {m.text}
                 </div>
               </div>
@@ -160,25 +103,8 @@ export default function Home() {
             )}
           </section>
 
-          <div style={{
-            position: "fixed",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "#fff",
-            borderTop: "1px solid #e5e5e5",
-            padding: "18px 24px"
-          }}>
-            <div style={{
-              maxWidth: 860,
-              margin: "0 auto",
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              border: "1px solid #d1d5db",
-              borderRadius: 16,
-              padding: 12
-            }}>
+          <div style={inputBar}>
+            <div style={inputBox}>
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -189,57 +115,159 @@ export default function Home() {
                   }
                 }}
                 placeholder="Preguntá algo sobre Sarmiento..."
-                style={{
-                  flex: 1,
-                  minHeight: 46,
-                  maxHeight: 130,
-                  border: "none",
-                  outline: "none",
-                  resize: "none",
-                  fontSize: 16,
-                  fontFamily: "inherit"
-                }}
+                style={textarea}
               />
 
-              <button onClick={sendMessage} disabled={loading} style={{
-                width: 46,
-                height: 46,
-                borderRadius: "50%",
-                border: "none",
-                background: "#111",
-                color: "#fff",
-                fontSize: 22,
-                cursor: "pointer"
-              }}>
+              <button onClick={sendMessage} disabled={loading} style={sendButton}>
                 ↑
               </button>
             </div>
           </div>
         </>
       )}
+
+      <footer style={footer}>
+        <button onClick={nuevoChat} style={footerButton}>
+          Nuevo chat
+        </button>
+
+        <button onClick={() => setSection("chat")} style={footerButton}>
+          Chat IA
+        </button>
+
+        <a
+          href="https://sites.google.com/view/megliopedia/x-bs"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={footerLink}
+        >
+          Archivos
+        </a>
+
+        <button onClick={() => setSection("contacto")} style={footerButton}>
+          Contacto
+        </button>
+      </footer>
     </main>
   );
 }
 
-const buttonSmall = {
-  background: "#111",
-  color: "#fff",
-  border: "none",
-  borderRadius: 8,
-  padding: "10px 14px",
-  fontSize: 15,
-  cursor: "pointer"
+const page = {
+  minHeight: "100vh",
+  background: "#fff",
+  color: "#111",
+  fontFamily: "Arial, Helvetica, sans-serif",
+  display: "flex",
+  flexDirection: "column" as const,
 };
 
-function navStyle(active: boolean) {
-  return {
-    background: "transparent",
-    border: "none",
-    borderBottom: active ? "3px solid #111" : "3px solid transparent",
-    padding: "26px 0",
-    fontSize: 16,
-    cursor: "pointer",
-    fontWeight: active ? 700 : 400,
-    color: active ? "#111" : "#555"
-  };
-}
+const header = {
+  height: 72,
+  borderBottom: "1px solid #e5e5e5",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "0 20px",
+};
+
+const title = {
+  fontFamily: "Georgia, serif",
+  fontSize: 26,
+  textAlign: "center" as const,
+};
+
+const chatSection = {
+  flex: 1,
+  maxWidth: 860,
+  width: "100%",
+  margin: "0 auto",
+  padding: "42px 18px 170px",
+};
+
+const contactSection = {
+  flex: 1,
+  maxWidth: 760,
+  margin: "70px auto",
+  padding: "0 24px 120px",
+  fontSize: 18,
+  lineHeight: 1.6,
+};
+
+const contactTitle = {
+  fontFamily: "Georgia, serif",
+  fontSize: 40,
+};
+
+const inputBar = {
+  position: "fixed" as const,
+  left: 0,
+  right: 0,
+  bottom: 54,
+  background: "#fff",
+  borderTop: "1px solid #e5e5e5",
+  padding: "14px 16px",
+};
+
+const inputBox = {
+  maxWidth: 860,
+  margin: "0 auto",
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  border: "1px solid #d1d5db",
+  borderRadius: 16,
+  padding: 10,
+};
+
+const textarea = {
+  flex: 1,
+  minHeight: 42,
+  maxHeight: 120,
+  border: "none",
+  outline: "none",
+  resize: "none" as const,
+  fontSize: 16,
+  fontFamily: "inherit",
+};
+
+const sendButton = {
+  width: 42,
+  height: 42,
+  borderRadius: "50%",
+  border: "none",
+  background: "#111",
+  color: "#fff",
+  fontSize: 21,
+  cursor: "pointer",
+};
+
+const footer = {
+  position: "fixed" as const,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: 54,
+  background: "#fff",
+  borderTop: "1px solid #e5e5e5",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 18,
+  fontSize: 14,
+};
+
+const footerButton = {
+  background: "transparent",
+  border: "none",
+  color: "#555",
+  fontSize: 14,
+  fontFamily: "inherit",
+  cursor: "pointer",
+  padding: 0,
+};
+
+const footerLink = {
+  color: "#555",
+  textDecoration: "none",
+  fontSize: 14,
+};
