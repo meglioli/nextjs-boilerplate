@@ -9,7 +9,7 @@ type Message = {
 
 const initialMessage: Message = {
   role: "assistant",
-  text: "Soy el asistente de la Biblioteca Sarmiento. Preguntame sobre Sarmiento, sus obras, su época o los documentos de la biblioteca.",
+  text: "Soy el asistente de la Biblioteca Sarmiento. Respondo consultas sobre Domingo F. Sarmiento, sus obras y su época, basado en las investigaciones más rigurosas sobre el sanjuaninno y en sus escritos originales, puestos hoy a disposición del público para su consulta íntegra, sin recortes ni censura.",
 };
 
 export default function Home() {
