@@ -106,16 +106,16 @@ export default function Home() {
                 >
                   {m.text}
 
-                  {m.role === "assistant" && (
-                    <div style={copyButtonWrap}>
-                      <button
-                        onClick={() => copyText(m.text, i)}
-                        style={copyButton}
-                      >
-                        {copiedIndex === i ? "Copiado" : "Copiar"}
-                      </button>
-                    </div>
-                  )}
+                 {m.role === "assistant" && i > 0 && (
+  <div style={copyButtonWrap}>
+    <button
+      onClick={() => copyText(m.text, i)}
+      style={copyButton}
+    >
+      {copiedIndex === i ? "Copiado" : "Copiar"}
+    </button>
+  </div>
+)}
                 </div>
               </div>
             ))}
