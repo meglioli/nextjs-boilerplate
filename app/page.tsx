@@ -9,7 +9,7 @@ type Message = {
 
 const initialMessage: Message = {
   role: "assistant",
-  text: "Soy el asistente de la Biblioteca Sarmiento. Respondo consultas sobre Domingo F. Sarmiento, sus obras y su época, basado en las investigaciones más rigurosas sobre el sanjuaninno y en sus escritos originales, puestos hoy a disposición del público para su consulta íntegra, sin recortes ni censura.",
+  text: "Soy el asistente de la Biblioteca Sarmiento. Respondo consultas sobre Domingo F. Sarmiento, sus obras y su época, basado en las investigaciones más rigurosas sobre el sanjuanino y en sus escritos originales, puestos hoy a disposición del público para su consulta íntegra, sin recortes ni censura.",
 };
 
 export default function Home() {
@@ -17,11 +17,22 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [section, setSection] = useState<"chat" | "contacto">("chat");
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   function nuevoChat() {
     setMessages([initialMessage]);
     setInput("");
     setSection("chat");
+    setCopiedIndex(null);
+  }
+
+  async function copyText(text: string, index: number) {
+    await navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+
+    setTimeout(() => {
+      setCopiedIndex(null);
+    }, 1800);
   }
 
   async function sendMessage() {
@@ -64,7 +75,9 @@ export default function Home() {
       {section === "contacto" ? (
         <section style={contactSection}>
           <h1 style={contactTitle}>Contacto</h1>
-          <p><strong>Mauricio Meglioli</strong></p>
+          <p>
+            <strong>Mauricio Meglioli</strong>
+          </p>
           <p>Responsable del proyecto Biblioteca Sarmiento.</p>
         </section>
       ) : (
@@ -92,6 +105,17 @@ export default function Home() {
                   }}
                 >
                   {m.text}
+
+                  {m.role === "assistant" && (
+                    <div style={copyButtonWrap}>
+                      <button
+                        onClick={() => copyText(m.text, i)}
+                        style={copyButton}
+                      >
+                        {copiedIndex === i ? "Copiado" : "Copiar"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -238,6 +262,23 @@ const sendButton = {
   background: "#111",
   color: "#fff",
   fontSize: 21,
+  cursor: "pointer",
+};
+
+const copyButtonWrap = {
+  marginTop: 12,
+  display: "flex",
+  justifyContent: "flex-end",
+};
+
+const copyButton = {
+  border: "1px solid #ccc",
+  background: "#fff",
+  color: "#333",
+  borderRadius: 10,
+  padding: "6px 10px",
+  fontSize: 13,
+  fontFamily: "inherit",
   cursor: "pointer",
 };
 
